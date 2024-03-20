@@ -1,0 +1,44 @@
+GET http://localhost:3000/products
+
+###Create a product
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "name": "iphone 12",
+    "price": 1200
+}
+
+
+###Get a product by id
+GET http://localhost:3000/products/id
+
+###Update a product by id
+PATCH http://localhost:3000/products/id
+
+###Delete a product by id
+DELETE http://localhost:3000/products/id
+
+###For anonymous route
+GET http://localhost:3000/
+
+###test with query
+GET http://localhost:3000/test?name=iMac&price=1000
+
+###test with params
+GET http://localhost:3000/test/
+
+###test with body
+POST http://localhost:3000/test
+Content-Type: application/json
+
+{
+    "name": "iMac",
+    "price": 1000
+}
+
+###test with body
+POST http://localhost:3000/test
+Content-Type: application/x-www-form-urlencoded
+
+name=iMac&price=1000
