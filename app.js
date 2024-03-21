@@ -1,13 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const createError = require("http-errors");
+const dotenv = require("dotenv").config();
+
+console.log(dotenv.parsed);
 
 const app = express();
 app.use(express.json()); //for post call with application json
 app.use(express.urlencoded({ extended: true })); //for post call with application x-www-form-urlencoded
 
-mongoose.connect("mongodb://localhost:27017/nodejs_base").then(() => {
-  console.log("Connected to database");
-});
+//Initialize DB
+require("./initDB")();
 
 app.all('/test',(req,res)=>{
   console.log(req.body);
@@ -20,9 +23,10 @@ const productRoute = require("./Routes/Product.route");
 app.use("/products", productRoute);
 
 app.use((req, res, next) => {
-  const err = new Error("Not found");
-  err.status = 404;
-  next(err);
+  // const err = new Error("Not found");
+  // err.status = 404;
+  // next(err);
+  next(createError(404, "Not found"));
 });
 
 //Error handler
@@ -36,6 +40,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server is running on port "+PORT+"...");
 });
